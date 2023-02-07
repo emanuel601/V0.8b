@@ -1,0 +1,81 @@
+
+
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <style>
+      .page-heading-results {
+	background-image: url({{ background_image }});
+}
+
+
+      </style>
+    <div class="heading-page header-text">
+
+      <section class="page-heading page-heading-results">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Gratis</h4>
+                <h2>Calculá el precio de tu auto</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Banner Ends Here -->
+    <div class="container price-calculator">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h3>Marca:</h3>
+              </div>
+              <div class="col">
+                <h2 class="results-car"> {{ brand }}</h2>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <h3>Modelo:</h3>
+              </div>
+              <div class="col">
+                <h2 class="results-car">{{ model }} {{ version }}</h2>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+               <h3>Año: </h3>
+              </div>
+              <div class="col">
+                <h2 class="results-car">{{ years }}</h2>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col">
+                <h2>Precio: </h2>
+              </div>
+              <div class="col">
+                <h1 class="results-car"> $ {{ price }}</h1>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+{% include "footer.html" %}

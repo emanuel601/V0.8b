@@ -1,0 +1,106 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    <script>
+        var brand_select = document.getElementById("marca");
+        var model_select = document.getElementById("modelo");
+        var version_select = document.getElementById("version");
+        var year_min = document.getElementById("desde");
+        var year_max = document.getElementById("hasta");
+
+        brand_select.onchange = function () {
+
+            brand = brand_select.value;
+
+            fetch('/models_list/' + brand).then(function (response) {
+
+                response.json().then(function (data) {
+                    var optionHTML = '<option value="">seleccionar modelo</option>';
+
+                    for (var model of data.car_models) {
+                        optionHTML += '<option value="' + model.id + '">' + model.name + '</option>';
+                    }
+
+                    model_select.innerHTML = optionHTML;
+
+
+                })
+
+            });
+            model_select.onchange = function () {
+
+                car_id = model_select.value;
+
+                fetch('/version_list/' + car_id).then(function (response) {
+
+                    response.json().then(function (data) {
+                        var optionVersionsHTML = '<option value="">seleccionar version</option>';
+
+                        for (var version of data.car_versions) {
+                            optionVersionsHTML += '<option value="' + version.id + '">' + version.name + '</option>';
+                        }
+
+                        version_select.innerHTML = optionVersionsHTML;
+                    })
+
+                });
+                version_select.onchange = function () {
+
+                    car_id = model_select.value;
+                    version_id = version_select.value;
+
+                    fetch('/year_list/' + car_id + '/' + version_id).then(function (response) {
+
+                        response.json().then(function (data) {
+                            var option_min_yearsHTML = '<option value="">seleccionar año</option>';
+
+                            for (var year of data.years) {
+                                option_min_yearsHTML += '<option value="' + year.year + '">' + year.year + '</option>';
+                            }
+
+                            year_min.innerHTML = option_min_yearsHTML;
+                        })
+
+                    });
+                    year_min.onchange = function () {
+
+                        car_id = model_select.value;
+                        version_id = version_select.value;
+
+                        fetch('/year_list/' + car_id + '/' + version_id).then(function (response) {
+
+                            response.json().then(function (data) {
+                                var option_max_yearsHTML = '<option value="">seleccionar año</option>';
+
+                                for (var year of data.years) {
+                                    option_max_yearsHTML += '<option value="' + year.year + '">' + year.year + '</option>';
+                                }
+
+                                year_max.innerHTML = option_max_yearsHTML;
+                            })
+
+                        });
+
+                    }
+
+                }
+            }
+        }
+    </script>
+
+
+</body>
+
+
+
+
+{% endblock %}

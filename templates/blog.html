@@ -1,0 +1,143 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Blog</h4>
+                <h2>Our Recent Blog Posts</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Banner Ends Here -->
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                {% for post in posts %}
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="{{ url_for('static', filename=post.img_url) }}" alt="">
+                    </div>
+                    <div class="down-content">
+                      <a href="{{ url_for('show_post', post_id=post.id) }}"><h4>{{ post.title }}</h4></a>
+                      
+                      <p>{{ post.subtitle }}</p>
+
+                      <ul class="post-info">
+                        <li><a href="#">{{ post.author.name }}</a></li>
+                        <li><a href="#">{{ post.date }}</a></li>
+                        <li><a href="#"><i class="fa fa-comments" title="Comments"></i> {{post.comments_children|length}}</a></li>
+                        {% if current_user.id == 1: %}
+                        <li><a href="{{url_for('delete_post', post_id=post.id) }}">❌</a></li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+
+
+                <div class="col-lg-12">
+
+                  <ul class="page-numbers">
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="sidebar">
+              <div class="row">
+                <div class="col-lg-12">
+
+                  <div class="sidebar-item search">
+                    <form id="search_form" name="gs" method="GET" action="#">
+                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                    </form>
+                  </div>
+                  <br>
+                  {% if current_user.id == 1: %}
+                  <div class="clearfix">
+                    <a class="btn btn-primary float-left" href="{{url_for('new_post')}}">Crear Post</a>
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="sidebar-item recent-posts">
+                    <div class="sidebar-heading">
+                      <h2>Posts Recientes</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        {% for post in posts %}
+                        <li><a href="{{ url_for('show_post', post_id=post.id) }}">
+                          <h5>{{ post.title }}</h5>
+                          <span>{{ post.date }}</span>
+                        </a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item categories">
+                    <div class="sidebar-heading">
+                      <h2>Categories</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        <li><a href="#">- Lorem ipsum dolor</a></li>
+                        <li><a href="#">- Consetur adiping</a></li>
+                        <li><a href="#">- Ipsa beatae esse</a></li>
+                        <li><a href="#">- Veritas perendis</a></li>
+                        <li><a href="#">- Accusantium porro</a></li>
+                        <li><a href="#">- Quae modi obcaecati</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item tags">
+                    <div class="sidebar-heading">
+                      <h2>Tag Clouds</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        <li><a href="#">Lorem</a></li>
+                        <li><a href="#">Ipsum</a></li>
+                        <li><a href="#">Dolor</a></li>
+                        <li><a href="#">Sit</a></li>
+                        <li><a href="#">Amet</a></li>
+                        <li><a href="#">Consetur</a></li>
+                        <li><a href="#">Adiping</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+{% include "footer.html" %}

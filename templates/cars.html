@@ -1,0 +1,194 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Gratis</h4>
+                <h2>Calculá el precio de tu auto</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Banner Ends Here -->
+    {% if logged_in: %}
+    <div class="container price-calculator">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+          <script>
+            var brand_select = document.getElementById("marca");
+            var model_select = document.getElementById("modelo");
+            var version_select = document.getElementById("version");
+            var year_select = document.getElementById("year");
+
+
+
+
+            brand_select.onchange = function () {
+
+                brand = brand_select.value;
+
+                // fetch('/models_list/' + brand)
+                fetch('/models_list', {
+                    method: 'POST',
+                    body: JSON.stringify({ data: brand }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+
+                    .then(function (response) {
+
+                        response.json().then(function (data) {
+                            var optionHTML = '<option value="">seleccionar modelo</option>';
+
+                            for (var model of data.car_models) {
+                                optionHTML += '<option value="' + model.id + '">' + model.name + '</option>';
+                            }
+
+                            model_select.innerHTML = optionHTML;
+
+                            model_select.options[1].selected = true;
+
+                            var element_modelo = document.getElementById('modelo');
+                            var event_modelo = new Event('change');
+                            element_modelo.dispatchEvent(event);
+
+                        })
+
+                    });
+
+            }
+
+
+            model_select.onchange = function () {
+
+                car_id = model_select.value;
+
+                // fetch('/version_list/' + car_id)
+                fetch('/version_list', {
+                    method: 'POST',
+                    body: JSON.stringify({ car: car_id }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                    .then(function (response) {
+
+                        response.json().then(function (data) {
+                            var optionVersionsHTML = '<option value="">seleccionar version</option>';
+
+                            for (var version of data.car_versions) {
+                                optionVersionsHTML += '<option value="' + version.id + '">' + version.name + '</option>';
+                            }
+
+                            version_select.innerHTML = optionVersionsHTML;
+
+                            version_select.options[1].selected = true;
+
+                            var element_version = document.getElementById('version');
+                            var event_version = new Event('change');
+                            element_version.dispatchEvent(event);
+
+                        })
+
+                    });
+
+            }
+
+            version_select.onchange = function () {
+
+                car_id = model_select.value;
+                version_id = version_select.value;
+
+                // fetch('/year_list/' + car_id + '/' + version_id)
+                fetch('/year_list', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        car: car_id,
+                        version: version_id
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+
+                    .then(function (response) {
+
+                        response.json().then(function (data) {
+                            var option_yearsHTML = '<option value="">seleccionar año</option>';
+
+                            for (var year of data.years) {
+                                option_yearsHTML += '<option value="' + year.year + '">' + year.year + '</option>';
+                            }
+
+                            year_select.innerHTML = option_yearsHTML;
+
+                            year_select.options[year.options.length - 1].selected = true;
+                            var element_year_select = document.getElementById('year');
+                            var event_year_select = new Event('change');
+                            element_year_select.dispatchEvent(event);
+
+                        })
+
+                    });
+
+
+            }
+
+        </script>
+
+            <script>
+                document.getElementById("marca").selectedIndex = "0";
+                var element_marca = document.getElementById('marca');
+                var event = new Event('change');
+                element_marca.dispatchEvent(event);
+
+                document.getElementById("modelo").eq(2);
+                var element_modelo = document.getElementById('modelo');
+                var event_modelo = new Event('change');
+                element_modelo.dispatchEvent(event);
+            </script>
+            <script>
+                fetch('/consulta', {
+                    method: 'POST',
+                    body: JSON.stringify({ datos: 'valor' }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(response => console.log('Success:', JSON.stringify(response)))
+                    .catch(error => console.error('Error:', error));
+            </script>
+
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="container col-6 cars-not-logged">
+        <span>Ingresá o registrate para consultar el precio de tu auto:</span>
+    </div>
+    <div class="container price-calculator col-6">
+        <a href="{{ url_for('login') }}" class="btn btn-secondary btn-lg btn-block" role="button" >Ingresar</a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg btn-block" role="button">Registrarse</a>
+    </div>
+    {% endif %}
+
+
+
+
+    
+{% include "footer.html" %}
