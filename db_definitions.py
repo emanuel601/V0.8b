@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy, query
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
+import os
 
 
 app = Flask(__name__)
@@ -10,8 +11,8 @@ app.config['SECRET_KEY'] = 'any-secret-key-you-choose'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///all_cars.db'
 app.config['SQLALCHEMY_BINDS'] = {'db2': 'sqlite:///users.db', 'db3': 'sqlite:///url_images.db'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdpxtMjAAAAAJD5-AfUy9_v0Av8FARPB3fpPKqo'  # <-- Add your site key
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdpxtMjAAAAAKuNfk8JRCZJRGuIdS7CRaa7ug92'  # <-- Add your secret key
+app.config['RECAPTCHA_PUBLIC_KEY'] = os.getenv('RECAPTCHA_PUBLIC_KEY')  # <-- Add your site key
+app.config['RECAPTCHA_PRIVATE_KEY'] = os.getenv('RECAPTCHA_PRIVATE_KEY')  # <-- Add your secret key
 db = SQLAlchemy(app)
 
 
