@@ -13,7 +13,7 @@ def image_search(q_image):
 
     searched_image = db.session.query(ImageDataBase).filter_by(q_image=q_image).first()
     try:
-        print(searched_image.q_image)
+        # print(searched_image.q_image)
         print('this works')
         return searched_image.url_image
     except AttributeError:
