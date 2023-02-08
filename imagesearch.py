@@ -1,17 +1,15 @@
 import os
-
 from google_images_search import GoogleImagesSearch
-from db_definitions import db, CarBrand, CarModel, ImageDataBase, app
+from db_definitions import db, CarBrand, CarModel, ImageDataBase, app,key
 
 
 # you can provide API key and CX using arguments,
 # or you can set environment variables: GCS_DEVELOPER_KEY, GCS_CX
 
-# gis = GoogleImagesSearch(os.getenv('API-KEY'), os.getenv('API-KEY-2'))
+gis = GoogleImagesSearch(key, os.getenv('API-KEY-2'))
 
 
 def image_search(q_image):
-    # key = os.getenv('API-KEY')
     searched_image = db.session.query(ImageDataBase).filter_by(q_image=q_image).first()
     try:
         print(searched_image.q_image)
@@ -23,8 +21,6 @@ def image_search(q_image):
         # For param marked with '##':
         #   - Multiselect is currently not feasible. Choose ONE option only
         #   - This param can also be omitted from _search_params if you do not wish to define any value
-        gis = GoogleImagesSearch(os.getenv('API-KEY'), os.getenv('API-KEY-2'))
-        key = os.environ.get('API-KEY')
         _search_params = {
             'key': key,
             'q': q_image,
