@@ -23,6 +23,7 @@ def image_search(q_image):
         #   - Multiselect is currently not feasible. Choose ONE option only
         #   - This param can also be omitted from _search_params if you do not wish to define any value
         _search_params = {
+            'key': os.getenv('API-KEY'),
             'q': q_image,
             'num': 1,
             'rights': 'cc_publicdomain|cc_attribute|cc_sharealike',
