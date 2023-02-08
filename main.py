@@ -7,7 +7,7 @@ from price_calculator import calc_price
 from myforms import ConsultPrice, CreateUser, LoginForm, CreatePostForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, LoginManager, login_required, current_user, logout_user
-from imagesearch import image_search, fulfill_carrousel
+from imagesearch import image_search, fulfill_carrousel, fulfill_images_db
 from datetime import date
 
 
@@ -40,6 +40,7 @@ def admin_only(f):
 def home():
     posts = BlogPost.query.all()
     images_carrousel = fulfill_carrousel()
+    # images_all_cars = fulfill_images_db()
     return render_template("index.html", logged_in=current_user.is_authenticated, posts=posts,
                            images_carrousel=images_carrousel)
 

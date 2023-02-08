@@ -13,7 +13,7 @@ def image_search(q_image):
 
     searched_image = db.session.query(ImageDataBase).filter_by(q_image=q_image).first()
     try:
-        # print(searched_image.q_image)
+        print(searched_image.q_image)
         print('this works')
         return searched_image.url_image
     except AttributeError:
@@ -52,6 +52,18 @@ def fulfill_carrousel():
                             for car in popular_cars]
 
     images_carrousel = [(image_search(query_image), query_image) for query_image in images_to_search]
+
+    return images_carrousel
+
+
+def fulfill_images_db():
+    with app.app_context():
+        popular_cars = db.session.query(CarModel).order_by(CarModel.cantidad.desc()).limit(200).all()
+
+        images_to_search = [f'{db.session.query(CarBrand).filter_by(id=car.parent_id).first().marca} {car.modelo}'
+                            for car in popular_cars]
+
+        images_carrousel = [(image_search(query_image), query_image) for query_image in images_to_search]
 
     return images_carrousel
 
