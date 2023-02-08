@@ -1,4 +1,5 @@
 import os
+from os import getenv
 from google_images_search import GoogleImagesSearch
 from db_definitions import db, CarBrand, CarModel, ImageDataBase, app
 
@@ -10,7 +11,7 @@ gis = GoogleImagesSearch(key, os.getenv('API-KEY-2'))
 
 
 def image_search(q_image):
-
+    key = os.getenv('API-KEY')
     searched_image = db.session.query(ImageDataBase).filter_by(q_image=q_image).first()
     try:
         print(searched_image.q_image)
@@ -29,9 +30,8 @@ def image_search(q_image):
             'rights': 'cc_publicdomain|cc_attribute|cc_sharealike',
             'imgType': 'photo'
         }
-
+        print(f"{_search_params}")
         print(key)
-        print(_search_params)
 
         gis.search(search_params=_search_params)
         with app.app_context():
