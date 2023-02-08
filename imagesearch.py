@@ -1,12 +1,12 @@
 import os
 from google_images_search import GoogleImagesSearch
-from db_definitions import db, CarBrand, CarModel, ImageDataBase, app,key
+from db_definitions import db, CarBrand, CarModel, ImageDataBase, app
 
 
 # you can provide API key and CX using arguments,
 # or you can set environment variables: GCS_DEVELOPER_KEY, GCS_CX
 
-gis = GoogleImagesSearch(key, os.getenv('API-KEY-2'))
+gis = GoogleImagesSearch('AIzaSyB_i4JD6HBZCUAO068mGa26D0L_hvenI-4', '55996aaa6f827413f')
 
 
 def image_search(q_image):
