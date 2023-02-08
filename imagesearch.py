@@ -6,7 +6,7 @@ from db_definitions import db, CarBrand, CarModel, ImageDataBase, app
 # you can provide API key and CX using arguments,
 # or you can set environment variables: GCS_DEVELOPER_KEY, GCS_CX
 
-gis = GoogleImagesSearch('AIzaSyB_i4JD6HBZCUAO068mGa26D0L_hvenI-4', '55996aaa6f827413f')
+gis = GoogleImagesSearch(os.getenv('API_KEY'), os.getenv('API_KEY_2'))
 
 
 def image_search(q_image):
@@ -28,7 +28,6 @@ def image_search(q_image):
             'imgType': 'photo'
         }
         # print(f"{_search_params}")
-
 
         gis.search(search_params=_search_params)
         with app.app_context():
