@@ -30,6 +30,8 @@ def image_search(q_image):
             'imgType': 'photo'
         }
 
+        print(key)
+
         gis.search(search_params=_search_params)
         with app.app_context():
             new_image = ImageDataBase(
