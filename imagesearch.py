@@ -11,7 +11,7 @@ from db_definitions import db, CarBrand, CarModel, ImageDataBase, app
 
 
 def image_search(q_image):
-    key = os.getenv('API-KEY')
+    # key = os.getenv('API-KEY')
     searched_image = db.session.query(ImageDataBase).filter_by(q_image=q_image).first()
     try:
         print(searched_image.q_image)
@@ -24,7 +24,7 @@ def image_search(q_image):
         #   - Multiselect is currently not feasible. Choose ONE option only
         #   - This param can also be omitted from _search_params if you do not wish to define any value
         gis = GoogleImagesSearch(os.getenv('API-KEY'), os.getenv('API-KEY-2'))
-        key = os.getenv('API-KEY')
+        key = os.environ.get('API-KEY')
         _search_params = {
             'key': key,
             'q': q_image,
