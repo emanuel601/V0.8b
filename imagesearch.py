@@ -31,6 +31,7 @@ def image_search(q_image):
         }
 
         print(key)
+        print(_search_params)
 
         gis.search(search_params=_search_params)
         with app.app_context():
