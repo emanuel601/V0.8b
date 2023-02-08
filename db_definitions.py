@@ -15,8 +15,6 @@ app.config['RECAPTCHA_PUBLIC_KEY'] = os.getenv('RECAPTCHA_PUBLIC_KEY')  # <-- Ad
 app.config['RECAPTCHA_PRIVATE_KEY'] = os.getenv('RECAPTCHA_PRIVATE_KEY')  # <-- Add your secret key
 db = SQLAlchemy(app)
 
-print(os.getenv('RECAPTCHA_PUBLIC_KEY'))
-print(os.getenv('API_KEY'))
 
 # CREATE TABLE IN DB
 class CarBrand(db.Model):
