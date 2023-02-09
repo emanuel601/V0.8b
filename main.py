@@ -207,7 +207,7 @@ def get_price(model, brand, version, year):
         # image_banner = image_search(f'{brand_name} logo')
     except IndexError:
         # image_banner = image_search(f'unknown car')
-        image_banner = image_search(f'{brand_name}')
+        image_banner = image_search(f'{brand_name} {model_name}')
     print(image_banner)
 
     return render_template('results.html', brand=brand_name, model=model_name, version=model_version, price=price,
