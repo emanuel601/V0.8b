@@ -1,4 +1,6 @@
 from functools import wraps
+
+import googleapiclient.errors
 from flask import render_template, request, url_for, redirect, jsonify, flash, abort
 from flask_bootstrap import Bootstrap
 from db_definitions import CarBrand, CarModel, CarVersion, User, BlogPost, Comment
@@ -205,7 +207,7 @@ def get_price(model, brand, version, year):
         # image_banner = image_search(f'"{brand_name} {model_name}" {model_version}')
         image_banner = image_search(f'"{brand_name} {model_name}" {model_version}')
         # image_banner = image_search(f'{brand_name} logo')
-    except IndexError:
+    except googleapiclient.errors.HttpError:
         # image_banner = image_search(f'unknown car')
         image_banner = image_search(f'{brand_name} {model_name}')
     print(image_banner)
