@@ -37,6 +37,7 @@ def image_search(q_image):
             )
             db.session.add(new_image)
             db.session.commit()
+            print(f"sought {q_image}")
 
         return gis.results()[0].url
 
@@ -58,7 +59,7 @@ def fulfill_carrousel():
 
 def fulfill_images_db():
     with app.app_context():
-        popular_cars = db.session.query(CarModel).order_by(CarModel.cantidad.desc()).limit(200).all()
+        popular_cars = db.session.query(CarModel).order_by(CarModel.cantidad.desc()).all()
 
         images_to_search = [f'{db.session.query(CarBrand).filter_by(id=car.parent_id).first().marca} {car.modelo}'
                             for car in popular_cars]
