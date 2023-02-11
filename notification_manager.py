@@ -15,7 +15,7 @@ class NotificationManager:
         my_email = self.email_account
         administrator_email = self.email_account_administrator
         password = os.environ.get("KEY_EMAIL")
-        with smtplib.SMTP("smtp.office365.com") as connection:
+        with smtplib.SMTP("smtp.office365.com", 587) as connection:
             connection.starttls()
             connection.login(user=my_email, password=password)
             connection.sendmail(from_addr=my_email, to_addrs=administrator_email,
