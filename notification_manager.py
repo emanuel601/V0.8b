@@ -8,12 +8,12 @@ import smtplib
 class NotificationManager:
     def __init__(self):
         self.email_account = os.getenv('YOUR_EMAIL_MANAGER_ACCOUNT')
-        self.email_account_adminstrator = os.getenv('EMAIL_ADMINISTRATOR_ACCOUNT')
+        self.email_account_administrator = os.getenv('EMAIL_ADMINISTRATOR_ACCOUNT')
 
     def send_email(self, name, email, subject, message):
 
         my_email = self.email_account
-        administrator_email = self.email_account_adminstrator
+        administrator_email = self.email_account_administrator
         password = os.environ.get("KEY_EMAIL")
         with smtplib.SMTP("smtp.office365.com") as connection:
             connection.starttls()

@@ -294,7 +294,7 @@ def contact():
     if form.validate_on_submit():
         mail_sender = NotificationManager()
         mail_sender.send_email(form.name.data, form.mail.data, form.subject.data, form.message.data)
-        print(form.name.data, form.mail.data, form.subject.data, form.message.data)
+        # print(form.name.data, form.mail.data, form.subject.data, form.message.data)
         return render_template("contact.html", logged_in=current_user.is_authenticated)
     return render_template("contact.html", logged_in=current_user.is_authenticated, form=form)
 
