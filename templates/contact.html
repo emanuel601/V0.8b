@@ -1,5 +1,5 @@
 {% include "header.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 
 
     <!-- Header -->
@@ -11,8 +11,8 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="text-content">
-                <h4>contact us</h4>
-                <h2>let’s stay in touch!</h2>
+                <h4>contacto</h4>
+                <h2>ponete en contacto!</h2>
               </div>
             </div>
           </div>
@@ -33,60 +33,64 @@
                 <div class="col-lg-8">
                   <div class="sidebar-item contact-form">
                     <div class="sidebar-heading">
-                      <h2>Send us a message</h2>
+                      {% if form %}
+                      <h2>Enviame un mensaje!</h2>
                     </div>
                     <div class="content">
-                      <form id="contact" action="" method="post">
+                      <form class="form" action="" method="post">
+                        {{ form.csrf_token() }}
                         <div class="row">
                           <div class="col-md-6 col-sm-12">
-                            <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your name" required="">
-                            </fieldset>
+                            {{ wtf.form_field(form.name) }}
                           </div>
                           <div class="col-md-6 col-sm-12">
-                            <fieldset>
-                              <input name="email" type="text" id="email" placeholder="Your email" required="">
-                            </fieldset>
+                            {{ wtf.form_field(form.mail) }}
                           </div>
                           <div class="col-md-12 col-sm-12">
-                            <fieldset>
-                              <input name="subject" type="text" id="subject" placeholder="Subject">
-                            </fieldset>
+                            {{ wtf.form_field(form.subject) }}
                           </div>
                           <div class="col-lg-12">
-                            <fieldset>
-                              <textarea name="message" rows="6" id="message" placeholder="Your Message" required=""></textarea>
-                            </fieldset>
+                            {{ wtf.form_field(form.message) }}
                           </div>
                           <div class="col-lg-12">
+                            {{ wtf.form_field(form.recaptcha) }}
+                          </div>
+                          <div class="col-lg-12">
+
                             <fieldset>
-                              <button type="submit" id="form-submit" class="main-button">Send Message</button>
+                              <button type="submit" id="form-submit" class="main-button">Enviar mensaje</button>
                             </fieldset>
                           </div>
                         </div>
                       </form>
+                      {% else %}
+                      <h2>Gracias por contactarte!</h2>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="sidebar-item contact-information">
                     <div class="sidebar-heading">
-                      <h2>contact information</h2>
+                      <h2>Consultas</h2>
                     </div>
                     <div class="content">
                       <ul>
                         <li>
-                          <h5>+1 333 4040 5566</h5>
-                          <span>PHONE NUMBER</span>
+                          <span>
+                            Gracias por visitar la página. Ante cualquier duda o inquietud, por favor,
+                            utiliza el siguiente formulario de contacto para enviarme un mensaje y me pondré en contacto
+                            lo antes posible.
+                          </span>
                         </li>
-                        <li>
-                          <h5>contact@company.com</h5>
-                          <span>EMAIL ADDRESS</span>
-                        </li>
-                        <li>
-                          <h5>212 Barrington Court New York</h5>
-                          <span>STREET ADDRESS</span>
-                        </li>
+<!--                        <li>-->
+<!--                          <h5>contact@company.com</h5>-->
+<!--                          <span>EMAIL ADDRESS</span>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <h5>212 Barrington Court New York</h5>-->
+<!--                          <span>STREET ADDRESS</span>-->
+<!--                        </li>-->
                       </ul>
                     </div>
                   </div>

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm, RecaptchaField
 from db_definitions import db, CarBrand, app
 from wtforms import SelectField, SubmitField, StringField, EmailField, PasswordField
 # from flask_sqlalchemy import SQLAlchemy
-from wtforms.validators import DataRequired, EqualTo, URL
+from wtforms.validators import DataRequired, EqualTo, URL, Email
 from flask_ckeditor import CKEditorField, CKEditor
 
 from flask_gravatar import Gravatar
@@ -42,6 +42,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Ingresar')
 
+# Blog forms
 
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
@@ -62,4 +63,13 @@ gravatar = Gravatar(app,
                     size=30,
                     rating='g', default='retro', force_default=False, force_lower=True, use_ssl=False, base_url=None)
 
+# Contact Form
 
+
+class ContactForm(FlaskForm):
+    name = StringField("Nombre", validators=[DataRequired()])
+    mail = EmailField("Email", validators=[DataRequired(), Email()])
+    subject = StringField("Motivo de la Consulta", validators=[DataRequired()])
+    message = StringField("Mensaje", validators=[DataRequired()])
+    recaptcha = RecaptchaField()
+    submit = SubmitField('Enviar Mensaje')

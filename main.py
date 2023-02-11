@@ -6,11 +6,12 @@ from flask_bootstrap import Bootstrap
 from db_definitions import CarBrand, CarModel, CarVersion, User, BlogPost, Comment
 from db_definitions import db, app
 from price_calculator import calc_price
-from myforms import ConsultPrice, CreateUser, LoginForm, CreatePostForm, CommentForm
+from myforms import ConsultPrice, CreateUser, LoginForm, CreatePostForm, CommentForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, LoginManager, login_required, current_user, logout_user
 from imagesearch import image_search, fulfill_carrousel, fulfill_images_db
 from datetime import date
+from notification_manager import NotificationManager
 
 
 Bootstrap(app)
@@ -287,9 +288,15 @@ def delete_post(post_id):
     return redirect(url_for('blog'))
 
 
-@app.route("/contacto")
+@app.route("/contacto", methods=['GET', 'POST'])
 def contact():
-    return render_template("contact.html", logged_in=current_user.is_authenticated)
+    form = ContactForm()
+    if form.validate_on_submit():
+        mail_sender = NotificationManager()
+        mail_sender.send_email(form.name.data, form.mail.data, form.subject.data, form.message.data)
+        print(form.name.data, form.mail.data, form.subject.data, form.message.data)
+        return render_template("contact.html", logged_in=current_user.is_authenticated)
+    return render_template("contact.html", logged_in=current_user.is_authenticated, form=form)
 
 
 @app.route("/acercade")
