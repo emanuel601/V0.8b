@@ -19,4 +19,4 @@ class NotificationManager:
             connection.starttls()
             connection.login(user=my_email, password=password)
             connection.sendmail(from_addr=my_email, to_addrs=administrator_email,
-                                msg=f"Subject:{subject} \n\n Email: {email} \n Nombre: {name} \n Mensaje: {message}")
+                                msg=f"Subject:{subject} \n\n Email: {email} \n Nombre: {name} \n Mensaje: {message}".encode('utf-8'))
