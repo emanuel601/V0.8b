@@ -70,11 +70,12 @@
                   </div>
                 </div>
                 <div class="col-lg-4">
+                  {% if form %}
                   <div class="sidebar-item contact-information">
                     <div class="sidebar-heading">
                       <h2>Consultas</h2>
                     </div>
-                    {% if form %}
+
                     <div class="content">
                       <ul>
                         <li>
@@ -94,8 +95,9 @@
 <!--                        </li>-->
                       </ul>
                     </div>
-                    {% endif %}
+
                   </div>
+                  {% endif %}
                 </div>
               </div>
             </div>
